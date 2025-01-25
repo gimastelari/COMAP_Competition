@@ -4,9 +4,8 @@ print(individuals_using_internet.read(), "\n")
 fixed_broadband_subscriptions= open("World/fixed_broadband_subscriptions.csv", "r")
 print(fixed_broadband_subscriptions.read(), "\n")
 
-mobile_data_and_voice_low_consumption_baskets = open("World/mobile_data_and_voice_low_consumption_baskets.csv", "r")
+mobile_data_and_voice_low_consumption_baskets = open("World/mobile_data_and_voice_low_consumption_basket.csv", "r")
 print(mobile_data_and_voice_low_consumption_baskets.read(), "\n")
 
-
-
-
+broadband_services_are_part_of_universal_service_access_scheme = open("World/broadband_services_are_part_of_universal_service_access_scheme.csv", "r")
+print(broadband_services_are_part_of_universal_service_access_scheme.read(), "\n")
