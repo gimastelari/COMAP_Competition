@@ -1,3 +1,4 @@
+
 individuals_using_internet = open("World/individuals_using_internet.csv", "r")
 print(individuals_using_internet.read(), "\n")
 
@@ -9,3 +10,9 @@ print(mobile_data_and_voice_low_consumption_baskets.read(), "\n")
 
 broadband_services_are_part_of_universal_service_access_scheme = open("World/broadband_services_are_part_of_universal_service_access_scheme.csv", "r")
 print(broadband_services_are_part_of_universal_service_access_scheme.read(), "\n")
+
+regulatory_authority_decision_making = open("World/regulatory_authority_decision_making.csv", "r")
+print(regulatory_authority_decision_making.read(), "\n")
+
+level_of_competition = open("World/level_of_competition.csv", "r")
+print(level_of_competition.read(), "\n")
