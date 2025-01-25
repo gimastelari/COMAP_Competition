@@ -23,3 +23,6 @@ print(digital_development_strategies.read(), "\n")
 
 publicly_available_information = open("World/publicly_available_information.csv", "r")
 print(publicly_available_information.read(), "\n")
+
+taxation_policies = open("World/taxation_policies.csv", "r")
+print(taxation_policies.read(), "\n")
