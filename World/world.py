@@ -16,3 +16,7 @@ print(regulatory_authority_decision_making.read(), "\n")
 
 level_of_competition = open("World/level_of_competition.csv", "r")
 print(level_of_competition.read(), "\n")
+
+digital_development_strategies = open("World/digital_development_strategies.csv", "r")
+print(digital_development_strategies.read(), "\n")
+
