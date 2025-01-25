@@ -20,3 +20,6 @@ print(level_of_competition.read(), "\n")
 digital_development_strategies = open("World/digital_development_strategies.csv", "r")
 print(digital_development_strategies.read(), "\n")
 
+
+publicly_available_information = open("World/publicly_available_information.csv", "r")
+print(publicly_available_information.read(), "\n")
