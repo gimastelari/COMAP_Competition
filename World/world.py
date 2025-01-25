@@ -26,3 +26,6 @@ print(publicly_available_information.read(), "\n")
 
 taxation_policies = open("World/taxation_policies.csv", "r")
 print(taxation_policies.read(), "\n")
+
+cybersecurity_framework_and_mandates = open("World/cybersecurity_framework_and_mandates.csv", "r")
+print(cybersecurity_framework_and_mandates.read(), "\n")
