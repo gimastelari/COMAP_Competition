@@ -1,0 +1,84 @@
+# Read in internet usage data
+int_usage <- read.csv("World/individuals_using_internet.csv")
+
+# # Load library for country codes
+# if (!require("countrycode")) {
+#     # Install the package
+#     install.packages("countrycode")
+#     # Load the library
+#     library("countrycode")
+# }
+
+
+# Associative vector mapping ISO alpha-3 country codes to ITU regions
+region_mapping <- c(
+    # Africa
+    "AGO" = "Africa", "BEN" = "Africa", "BWA" = "Africa", "BFA" = "Africa", "BDI" = "Africa",
+    "CMR" = "Africa", "CPV" = "Africa", "CAF" = "Africa", "TCD" = "Africa", "COG" = "Africa",
+    "CIV" = "Africa", "COD" = "Africa", "GNQ" = "Africa", "ERI" = "Africa", "SWZ" = "Africa",
+    "ETH" = "Africa", "GAB" = "Africa", "GMB" = "Africa", "GHA" = "Africa", "GIN" = "Africa",
+    "GNB" = "Africa", "KEN" = "Africa", "LSO" = "Africa", "LBR" = "Africa", "MDG" = "Africa",
+    "MWI" = "Africa", "MLI" = "Africa", "MUS" = "Africa", "MOZ" = "Africa", "NAM" = "Africa",
+    "NER" = "Africa", "NGA" = "Africa", "RWA" = "Africa", "STP" = "Africa", "SEN" = "Africa",
+    "SYC" = "Africa", "SLE" = "Africa", "ZAF" = "Africa", "SSD" = "Africa", "TZA" = "Africa",
+    "TGO" = "Africa", "UGA" = "Africa", "ZMB" = "Africa", "ZWE" = "Africa",
+
+    # Americas
+    "ATG" = "Americas", "ARG" = "Americas", "BHS" = "Americas", "BRB" = "Americas", "BLZ" = "Americas",
+    "BOL" = "Americas", "BRA" = "Americas", "CAN" = "Americas", "CHL" = "Americas", "COL" = "Americas",
+    "CRI" = "Americas", "CUB" = "Americas", "DMA" = "Americas", "DOM" = "Americas", "ECU" = "Americas",
+    "SLV" = "Americas", "GRD" = "Americas", "GTM" = "Americas", "GUY" = "Americas", "HTI" = "Americas",
+    "HND" = "Americas", "JAM" = "Americas", "MEX" = "Americas", "NIC" = "Americas", "PAN" = "Americas",
+    "PRY" = "Americas", "PER" = "Americas", "KNA" = "Americas", "LCA" = "Americas", "VCT" = "Americas",
+    "SUR" = "Americas", "TTO" = "Americas", "USA" = "Americas", "URY" = "Americas", "VEN" = "Americas",
+
+    # Arab States
+    "DZA" = "Arab States", "BHR" = "Arab States", "COM" = "Arab States", "DJI" = "Arab States",
+    "EGY" = "Arab States", "IRQ" = "Arab States", "JOR" = "Arab States", "KWT" = "Arab States",
+    "LBN" = "Arab States", "LBY" = "Arab States", "MRT" = "Arab States", "MAR" = "Arab States",
+    "OMN" = "Arab States", "PSE" = "Arab States", "QAT" = "Arab States", "SAU" = "Arab States",
+    "SOM" = "Arab States", "SDN" = "Arab States", "SYR" = "Arab States", "TUN" = "Arab States",
+    "ARE" = "Arab States", "YEM" = "Arab States",
+
+    # Asia and the Pacific
+    "AFG" = "Asia and the Pacific", "AUS" = "Asia and the Pacific", "BGD" = "Asia and the Pacific",
+    "BTN" = "Asia and the Pacific", "BRN" = "Asia and the Pacific", "KHM" = "Asia and the Pacific",
+    "CHN" = "Asia and the Pacific", "PRK" = "Asia and the Pacific", "FJI" = "Asia and the Pacific",
+    "HKG" = "Asia and the Pacific", "IND" = "Asia and the Pacific", "IDN" = "Asia and the Pacific",
+    "IRN" = "Asia and the Pacific", "JPN" = "Asia and the Pacific", "KIR" = "Asia and the Pacific",
+    "KOR" = "Asia and the Pacific", "LAO" = "Asia and the Pacific", "MAC" = "Asia and the Pacific",
+    "MYS" = "Asia and the Pacific", "MDV" = "Asia and the Pacific", "MHL" = "Asia and the Pacific",
+    "FSM" = "Asia and the Pacific", "MNG" = "Asia and the Pacific", "MMR" = "Asia and the Pacific",
+    "NRU" = "Asia and the Pacific", "NPL" = "Asia and the Pacific", "NZL" = "Asia and the Pacific",
+    "PAK" = "Asia and the Pacific", "PNG" = "Asia and the Pacific", "PHL" = "Asia and the Pacific",
+    "WSM" = "Asia and the Pacific", "SGP" = "Asia and the Pacific", "SLB" = "Asia and the Pacific",
+    "LKA" = "Asia and the Pacific", "THA" = "Asia and the Pacific", "TLS" = "Asia and the Pacific",
+    "TON" = "Asia and the Pacific", "TUV" = "Asia and the Pacific", "VUT" = "Asia and the Pacific",
+    "VNM" = "Asia and the Pacific",
+
+    # CIS (Commonwealth of Independent States)
+    "ARM" = "CIS", "AZE" = "CIS", "BLR" = "CIS", "KAZ" = "CIS", "KGZ" = "CIS",
+    "RUS" = "CIS", "TJK" = "CIS", "TKM" = "CIS", "UZB" = "CIS",
+
+    # Europe
+    "ALB" = "Europe", "AND" = "Europe", "AUT" = "Europe", "BEL" = "Europe", "BIH" = "Europe",
+    "BGR" = "Europe", "HRV" = "Europe", "CYP" = "Europe", "CZE" = "Europe", "DNK" = "Europe",
+    "EST" = "Europe", "FIN" = "Europe", "FRA" = "Europe", "DEU" = "Europe", "GRC" = "Europe",
+    "HUN" = "Europe", "ISL" = "Europe", "IRL" = "Europe", "ITA" = "Europe", "LVA" = "Europe",
+    "LIE" = "Europe", "LTU" = "Europe", "LUX" = "Europe", "MLT" = "Europe", "MCO" = "Europe",
+    "MNE" = "Europe", "NLD" = "Europe", "MKD" = "Europe", "NOR" = "Europe", "POL" = "Europe",
+    "PRT" = "Europe", "ROU" = "Europe", "SMR" = "Europe", "SRB" = "Europe", "SVK" = "Europe",
+    "SVN" = "Europe", "ESP" = "Europe", "SWE" = "Europe", "CHE" = "Europe", "GBR" = "Europe",
+    "UKR" = "Europe", "VAT" = "Europe"
+)
+
+
+# Create a new column with regions
+int_usage$Region <- region_mapping[int_usage$entityIso]
+
+
+boxplot(dataValue ~ Region,
+    data = int_usage,
+    ylab = "Internet Usage (percentage)",
+    col = c(2:7)
+)
