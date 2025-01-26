@@ -35,6 +35,7 @@ taxation_policies.read()
 cybersecurity_framework_and_mandates = open("World/cybersecurity_framework_and_mandates.csv", "r")
 cybersecurity_framework_and_mandates.read()
 
+
 # Scatterplot Showing Relation Between The Series Name & the Entity Name 
 
 final_df = pd.read_csv('World/cybersecurity_framework_and_mandates.csv')
@@ -58,7 +59,20 @@ plt.xticks(fontsize=8)
 plt.xticks(rotation=10) 
 plt.show()
 
-regions_countries = {
+
+
+df = pd.read_csv('World/cybersecurity_framework_and_mandates.csv')
+
+regulations = [
+    "ICT regulator have a cybersecurity mandate", 
+    "Cybersecurity legislation/regulation exist", 
+    "Areas covered", 
+    "Specific requirements to operators and service providers", 
+    "Requirements to operators and service providers (e.g., cybersecurity, online safety)"
+]
+df_filtered = df[df['seriesName'].isin(regulations)]
+
+region_map = {
     "Africa": [
         "Angola", "Benin", "Botswana", "Burkina Faso", "Burundi", "Cameroon", "Cabo Verde", 
         "Central African Rep.", "Chad", "Congo (Rep. of the)", "Côte d'Ivoire", 
@@ -111,12 +125,42 @@ regions_countries = {
     ]
 }
 
-policy_data = {
-    Countru 
+region_dict = {country: region for region, countries in region_map.items() for country in countries}
 
-}
+df_filtered['Region'] = df_filtered["entityName"].map(region_dict)
+
+compliance_counts = df_filtered.groupby(["Region", "seriesName"]).size().unstack(fill_value=0)
+
+compliance_percentage = compliance_counts.div(compliance_counts.sum(axis=1), axis=0) * 100
+
+ax = compliance_percentage.plot(kind="bar", stacked = True, figsize = (14,8), width=0.7, cmap="tab20")
+
+for i, bar in enumerate(ax.patches): 
+    height = bar.get_height() 
+    if height > 0: 
+        x = bar.get_x() + bar.get_width() / 2
+        y = bar.get_y() + height / 2
+        ax.text(
+            x, y, 
+            f"{height: .1f}%", 
+            ha='center', 
+            va='center', 
+            fontsize=9, 
+            color="white",
+            weight="bold"
+        )
 
 
-
-
-
+plt.title("Compliance with Cybersecurity Regulations by Region", fontsize=16)
+plt.xlabel("Region", fontsize=14)
+plt.ylabel("Percentage of Countries", fontsize=14)
+plt.xticks(rotation=45, ha = "right", fontsize=10)
+plt.legend(
+    title="Regulations", 
+    bbox_to_anchor=(1.05, 1), 
+    loc='upper left', 
+    fontsize=9
+)
+plt.grid(axis='y', linestyle="--", linewidth=0.5, alpha=0.7)
+plt.tight_layout()
+plt.show()
