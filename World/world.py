@@ -43,17 +43,20 @@ series_count_df.columns = ['seriesName', 'CountryCount']
 
 sns.set(style='whitegrid')
 plt.figure(figsize = (10,6))
-sns.barplot(
+bplot = sns.barplot(
     series_count_df, 
     x = 'seriesName',
     y = 'CountryCount',
     hue = 'seriesName', 
-    palette = 'Set2',
-    legend = False)
+    palette = 'Set2')
+
 plt.title('Number of Countries in Each Cybersecurity Policy Category')
-plt.xlabel('Cybersecurity Policy Series', fontsize = 12)
+plt.xlabel('Cybersecurity Policy Series', fontsize = 8)
 plt.ylabel('Number of Countries', fontsize = 12)
-plt.tight_layout()
+# plt.tight_layout()
+
+plt.xticks(fontsize=8)
+plt.xticks(rotation=10) 
 plt.show()
 
 
