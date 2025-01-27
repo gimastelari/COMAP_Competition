@@ -73,16 +73,51 @@ region_mapping <- c(
     "UKR" = "Europe", "VAT" = "Europe"
 )
 
-
 # Create a new column with regions
 int_usage$Region <- region_mapping[int_usage$entityIso]
 
+# Read in global annual investment data
+ann_inv <- read.csv("World/annual-investment-in-telecommunication-services_1737932363975.csv")
 
+# Create a new column with regions
+ann_inv$Region <- region_mapping[ann_inv$entityIso]
+
+# Internet Usage vs Region
 boxplot(dataValue ~ Region,
     data = int_usage,
     ylab = "Internet Usage (percentage)",
     col = c(2:7)
 )
+
+# Boxplot for annual investment vs region
+boxplot(dataValue ~ Region,
+    data = ann_inv,
+    ylab = "Annual Investment",
+    ylim = c(0, 1e+9),
+    col = c(2:7)
+)
+
+# Read in country access data
+country_conn <- read.csv("World/country-access-to-international-connectivity_1737944348620.csv")
+
+# Create a new column with regions
+country_conn$Region <- region_mapping[country_conn$entityIso]
+
+# Connectivity vs Region
+barplot(table(country_conn$Region, country_conn$dataValue),
+    beside = TRUE,
+    col = c(2:length(levels(factor(ann_inv$Region)))),
+    xlab = "Intenet Access and Connectivity",
+    ylab = "No. of Countries per region"
+)
+
+# Legend
+legend("topright",
+    legend = levels(factor(ann_inv$Region)),
+    fill = c(2:length(levels(factor(ann_inv$Region))))
+)
+
+
 
 # Import VCDB datasets
 vcdb_data1 <- read.csv("Incidents/vcdb_1.csv")
