@@ -244,7 +244,7 @@ region_incident_df = pd.DataFrame(
 region_incident_df = region_incident_df.sort_values(by= "Incident Count", ascending = False)
 
 plt.figure(figsize=(12,8))
-sns.barplot(x="Incident Count", y="Region", data=region_incident_df, palette = "viridis")
+sns.barplot(x="Incident Count", y="Regions", data=region_incident_df, palette = "viridis")
 plt.title("Frequency of Cybercrime Incidents by Region", fontsize = 16)
 plt.xlabel("Frequency of Incidents", fontsize = 14)
 plt.ylabel("Region", fontsize = 14)
