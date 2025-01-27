@@ -4,34 +4,6 @@ import numpy as np #used for numerical operations
 import matplotlib.pyplot as plt 
 import seaborn as sns 
 
-individuals_using_internet = open("World/individuals_using_internet.csv", "r")
-individuals_using_internet.read()
-
-fixed_broadband_subscriptions= open("World/fixed_broadband_subscriptions.csv", "r")
-fixed_broadband_subscriptions.read()
-
-mobile_data_and_voice_low_consumption_baskets = open("World/mobile_data_and_voice_low_consumption_basket.csv", "r")
-mobile_data_and_voice_low_consumption_baskets.read()
-
-broadband_services_are_part_of_universal_service_access_scheme = open("World/broadband_services_are_part_of_universal_service_access_scheme.csv", "r")
-broadband_services_are_part_of_universal_service_access_scheme.read()
-
-regulatory_authority_decision_making = open("World/regulatory_authority_decision_making.csv", "r")
-regulatory_authority_decision_making.read()
-
-level_of_competition = open("World/level_of_competition.csv", "r")
-level_of_competition.read()
-
-digital_development_strategies = open("World/digital_development_strategies.csv", "r")
-digital_development_strategies.read()
-
-
-publicly_available_information = open("World/publicly_available_information.csv", "r")
-publicly_available_information.read()
-
-taxation_policies = open("World/taxation_policies.csv", "r")
-taxation_policies.read()
-
 cybersecurity_framework_and_mandates = open("World/cybersecurity_framework_and_mandates.csv", "r")
 cybersecurity_framework_and_mandates.read()
 
@@ -58,8 +30,6 @@ plt.ylabel('Number of Countries', fontsize = 12)
 plt.xticks(fontsize=8)
 plt.xticks(rotation=10) 
 plt.show()
-
-
 
 df = pd.read_csv('World/cybersecurity_framework_and_mandates.csv')
 
@@ -162,5 +132,121 @@ plt.legend(
     fontsize=9
 )
 plt.grid(axis='y', linestyle="--", linewidth=0.5, alpha=0.7)
+plt.tight_layout()
+plt.show()
+
+
+
+vcdb1 = open("Incidents/vcdb_1.csv", "r")
+vcdb2 = open("Incidents/vcdb_1.csv", "r")
+vcdb1.read()
+vcdb2.read()
+
+vcdb1_df = pd.read_csv("Incidents/vcdb_1.csv", low_memory=False)
+vcdb2_df = pd.read_csv("Incidents/vcdb_2.csv", low_memory=False)
+vcdb = pd.concat([vcdb1_df, vcdb2_df], ignore_index = True)
+
+
+region_mapping_for_iso_codes = {
+    "Africa": [
+        "victim.country.AO", "victim.country.BJ", "victim.country.BW", 
+        "victim.country.BF", "victim.country.BI", "victim.country.CM",
+        "victim.country.CV", "victim.country.TD", "victim.country.CG",
+        "victim.country.CI", "victim.country.CD", "victim.country.GQ",
+        "victim.country.ER", "victim.country.SZ", "victim.country.ET",
+        "victim.country.GA", "victim.country.GM", "victim.country.GH",
+        "victim.country.GN", "victim.country.GW", "victim.country.KE",
+        "victim.country.LS", "victim.country.LR", "victim.country.MG",
+        "victim.country.MW", "victim.country.ML", "victim.country.MU",
+        "victim.country.MZ", "victim.country.NA", "victim.country.NE",
+        "victim.country.NG", "victim.country.RW", "victim.country.ST",
+        "victim.country.SN", "victim.country.SC", "victim.country.SL",
+        "victim.country.SO", "victim.country.ZA", "victim.country.SS",
+        "victim.country.TZ", "victim.country.TG", "victim.country.UG",
+        "victim.country.ZM", "victim.country.ZW"
+    ],
+    "The Americas": [
+        "victim.country.AG", "victim.country.AR", "victim.country.BS",
+        "victim.country.BB", "victim.country.BZ", "victim.country.BO",
+        "victim.country.BR", "victim.country.CA", "victim.country.CL",
+        "victim.country.CO", "victim.country.CR", "victim.country.CU",
+        "victim.country.DM", "victim.country.DO", "victim.country.EC",
+        "victim.country.SV", "victim.country.GD", "victim.country.GT",
+        "victim.country.GY", "victim.country.HT", "victim.country.HN",
+        "victim.country.JM", "victim.country.MX", "victim.country.NI",
+        "victim.country.PA", "victim.country.PY", "victim.country.PE",
+        "victim.country.KN", "victim.country.LC", "victim.country.VC",
+        "victim.country.SR", "victim.country.TT", "victim.country.US",
+        "victim.country.UY", "victim.country.VE"
+    ],
+    "Arab States": [
+        "victim.country.DZ", "victim.country.BH", "victim.country.KM",
+        "victim.country.DJ", "victim.country.EG", "victim.country.IQ",
+        "victim.country.JO", "victim.country.KW", "victim.country.LB",
+        "victim.country.LY", "victim.country.MR", "victim.country.MA",
+        "victim.country.OM", "victim.country.PS", "victim.country.QA",
+        "victim.country.SA", "victim.country.SO", "victim.country.SD",
+        "victim.country.SY", "victim.country.TN", "victim.country.AE",
+        "victim.country.YE"
+    ],
+    "Asia and the Pacific": [
+        "victim.country.AF", "victim.country.AU", "victim.country.BD",
+        "victim.country.BT", "victim.country.BN", "victim.country.KH",
+        "victim.country.CN", "victim.country.KP", "victim.country.FJ",
+        "victim.country.HK", "victim.country.IN", "victim.country.ID",
+        "victim.country.IR", "victim.country.JP", "victim.country.KI",
+        "victim.country.KR", "victim.country.LA", "victim.country.MO",
+        "victim.country.MY", "victim.country.MV", "victim.country.MH",
+        "victim.country.FM", "victim.country.MN", "victim.country.MM",
+        "victim.country.NR", "victim.country.NP", "victim.country.NZ",
+        "victim.country.PK", "victim.country.PW", "victim.country.PG",
+        "victim.country.PH", "victim.country.WS", "victim.country.SG",
+        "victim.country.SB", "victim.country.LK", "victim.country.TH",
+        "victim.country.TL", "victim.country.TO", "victim.country.TV",
+        "victim.country.VU", "victim.country.VN"
+    ],
+    "CIS": [
+        "victim.country.AM", "victim.country.AZ", "victim.country.BY",
+        "victim.country.KZ", "victim.country.KG", "victim.country.RU",
+        "victim.country.TJ", "victim.country.TM", "victim.country.UZ"
+    ],
+    "Europe": [
+        "victim.country.AL", "victim.country.AD", "victim.country.AT",
+        "victim.country.BE", "victim.country.BA", "victim.country.BG",
+        "victim.country.HR", "victim.country.CY", "victim.country.CZ",
+        "victim.country.DK", "victim.country.EE", "victim.country.FI",
+        "victim.country.FR", "victim.country.GE", "victim.country.DE",
+        "victim.country.GR", "victim.country.HU", "victim.country.IS",
+        "victim.country.IE", "victim.country.IL", "victim.country.IT",
+        "victim.country.LV", "victim.country.LI", "victim.country.LT",
+        "victim.country.LU", "victim.country.MT", "victim.country.MD",
+        "victim.country.MC", "victim.country.ME", "victim.country.NL",
+        "victim.country.MK", "victim.country.NO", "victim.country.PL",
+        "victim.country.PT", "victim.country.RO", "victim.country.SM",
+        "victim.country.RS", "victim.country.SK", "victim.country.SI",
+        "victim.country.ES", "victim.country.SE", "victim.country.CH",
+        "victim.country.TR", "victim.country.UA", "victim.country.GB",
+        "victim.country.VA"
+    ]
+}
+
+
+region_incident_counts = {region:0 for region in region_mapping_for_iso_codes.keys()}
+for region, countries in region_mapping_for_iso_codes.items(): 
+    for country in countries: 
+        if country in vcdb.columns: 
+            region_incident_counts[region] += vcdb[country].sum()
+
+region_incident_df = pd.DataFrame(
+    list(region_incident_counts.items()), columns = ["Regions", "Incident Count"]
+)
+
+region_incident_df = region_incident_df.sort_values(by= "Incident Count", ascending = False)
+
+plt.figure(figsize=(12,8))
+sns.barplot(x="Incident Count", y="Region", data=region_incident_df, palette = "viridis")
+plt.title("Frequency of Cybercrime Incidents by Region", fontsize = 16)
+plt.xlabel("Frequency of Incidents", fontsize = 14)
+plt.ylabel("Region", fontsize = 14)
 plt.tight_layout()
 plt.show()
