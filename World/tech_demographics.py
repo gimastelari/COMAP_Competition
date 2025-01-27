@@ -3,6 +3,7 @@ import pandas as pd #used for data manipulation and analysis
 import matplotlib
 import matplotlib.pyplot as plt 
 import seaborn as sns 
+import statsmodels.api as sm # Statistical tools
 
 
 
@@ -369,3 +370,52 @@ plt.show()
 # Load VCDB database
 vcdb_data1 = pd.read_csv("Incidents/vcdb_1.csv")
 vcdb_data2 = pd.read_csv('Incidents/vcdb_2.csv')
+
+# Convert connectivity `dataValue` to numeric values
+country_conn['dataValue'] = country_conn['dataValue'].map({'Yes': 1, 'No': 0})
+
+# Merge all three datasets
+demo_merge = pd.merge(int_usage_df, ann_invs_df, on="entityName", suffixes=('_internet', '_investment'))
+demo_merge = pd.merge(demo_merge, country_conn, on='entityName')
+
+# Keep only relevant columns
+demo_merge = demo_merge[['entityName', 'dataValue_internet', 'dataValue_investment', 'dataValue']]
+
+# Rename columns for clarity
+demo_merge.rename(columns={
+    'dataValue_internet': 'Internet_Usage',
+    'dataValue_investment': 'Telecom_Investment',
+    'dataValue': 'International_Connectivity'
+}, inplace=True)
+
+# Drop rows with missing values
+demo_merge.dropna(inplace=True)
+
+# Get correlation matrix
+demo_corr = demo_merge[['Internet_Usage', 'Telecom_Investment', 'International_Connectivity']].corr()
+
+# Plot the correlation heatmap
+plt.figure(figsize=(8, 6))
+sns.heatmap(demo_corr, annot=True, cmap="coolwarm", fmt=".2f", linewidths=0.5)
+
+# Add title to the heatmap
+plt.title("Correlation Between Internet Usage, Telecom Investment, and Connectivity")
+plt.show()
+
+##### Linear Models #####
+# Step 4: Create linear models for each combination of demographics
+demographics = ['Internet_Usage', 'Telecom_Investment', 'International_Connectivity']
+models = {}
+
+# Model creation and output
+for i, x in enumerate(demographics):
+    for y in demographics[i+1:]:
+        X = demo_merge[[x]]
+        X = sm.add_constant(X)  # Add constant for intercept
+        Y = demo_merge[y]
+        model = sm.OLS(Y, X).fit()
+        models[f'{y} ~ {x}'] = model
+        print(f'Linear model for {y} ~ {x}:')
+        print(model.summary())
+        print("\n")
+
