@@ -419,3 +419,10 @@ for i, x in enumerate(demographics):
         print(model.summary())
         print("\n")
 
+# Step 5: Plot Internet Usage vs Telecom Investment with a best-fit line (condensed view)
+plt.figure(figsize=(8, 6))
+sns.regplot(x='Internet_Usage', y='Telecom_Investment', data=demo_merge.sample(500, random_state=42), ci=None, line_kws={'color': 'red'})
+plt.title("Internet Usage vs Telecom Investment (Sampled)")
+plt.xlabel("Internet Usage (%)")
+plt.ylabel("Telecom Investment (USD)")
+plt.show()
